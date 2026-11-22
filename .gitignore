@@ -1,0 +1,8 @@
+# Compiled outputs (keep tracked docs/preview-*.png)
+*.pdf
+*.tmp
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.venv/
