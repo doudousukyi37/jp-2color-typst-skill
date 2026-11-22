@@ -15,10 +15,15 @@ Transform plain Markdown, technical specifications, diff comparisons, or Feishu 
 
 ## Core Aesthetic Principles (Non-Negotiable)
 
-1. **Strictly Two Inks**:
-   - **Ink 1 — Sumi Black (`K`)**: `#1C1C1C` (primary text/rules), `#595959` (secondary/margin notes), `#8C8C8C` (captions/footers), `#C4C4C4` / `#E8E8E8` (hairlines), `#F4F4F4` (code/muted tint).
-   - **Ink 2 — Single Spot Ink** (default **Print Cobalt `#005BAC`**): `spot-100` (`#005BAC`), `spot-40` (`#6FA3D2`), `spot-10` (`#EBF3FA`).
-   - **Never** introduce a third accent color, gradients, drop shadows, glassmorphism, or rounded SaaS cards.
+1. **Restrained Editorial Color System** (Pure `#FFFFFF` page — zero gradients, drop shadows, glassmorphism, or rounded SaaS cards):
+   - **Default Theme — `irasutoya`（いらすとや 三色淡彩混搭）**:
+     - **Warm Charcoal Ink**: `#332C28` (primary text/rules), `#665C56` (secondary/margin notes), `#8E847E` (captions/footers), `#CFC7C1` / `#EBE6E2` (hairlines), `#F6F4F2` (code/muted surface).
+     - **Semantic 3-Pastel Roles**:
+       - **Watercolor Sky (`#4788C7` / `#93BEE3` / `#EFF6FC`)**: Structural backbone — chapter double rules, numbered badges, TOC, table header tint, primary flow path, `#spot[...]`.
+       - **Warm Apricot (`#D6743B` / `#EBA97F` / `#FEF4EC`)**: Key destination / decision emphasis — chapter right badge, `d-box(mode: "solid")`, `seq-step(highlight-step: true)`, code language tag, `#accent[...]`.
+       - **Sakura Coral (`#D45B70` / `#E8A0AD` / `#FDF1F3`)**: Callout & caution focus — `POINT!` / `CAUTION` floating-tab dashed box, `#pink[...]`.
+   - **Optional 1-Line Theme Presets** (in `template-jp-2color.typ`): `"cobalt"` (classic *《图解 HTTP》* strict 2-color Sumi Black `#1C1C1C` × Cobalt `#005BAC`), `"sakura"`, `"sky"`, `"apricot"`.
+   - Each color has a **strict semantic role** — never scatter colors randomly across prose.
 2. **Card-Free Editorial Airiness**:
    - Separate sections with crisp horizontal print rules (`1.35pt` spot + `0.4pt` gray double rules for chapters; `0.4pt` hairlines between items).
    - Use an asymmetric **main column (`1fr`) + right margin column (`43mm–44mm`)** for source paths, implementation caveats, and diagram notes.

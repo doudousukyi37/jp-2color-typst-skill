@@ -1,6 +1,7 @@
 // ============================================================================
-// Sample Document: Japanese 2-Color Print (2色刷り) Technical Handbook
-// Self-contained example — works directly in Obsidian Typst Mate & Typst CLI
+// Sample Document: Japanese Editorial Technical Handbook (Self-Contained)
+// Default Theme: "irasutoya" — Warm Charcoal (#332C28) + Sky / Apricot / Sakura
+// Works directly in Obsidian Typst Mate & Typst 0.13–0.15+ CLI
 // Compile: typst compile sample-tech-spec.typ sample-tech-spec.pdf
 // ============================================================================
 
@@ -9,15 +10,21 @@
 #let f-mono = ("Consolas", "Noto Sans SC")
 
 #let ink = (
-  k100:     rgb("#1C1C1C"),
-  k65:      rgb("#595959"),
-  k40:      rgb("#8C8C8C"),
-  k25:      rgb("#C4C4C4"),
-  k10:      rgb("#E8E8E8"),
-  k05:      rgb("#F4F4F4"),
-  spot-100: rgb("#005BAC"),
-  spot-40:  rgb("#6FA3D2"),
-  spot-10:  rgb("#EBF3FA"),
+  k100:       rgb("#332C28"),
+  k65:        rgb("#665C56"),
+  k40:        rgb("#8E847E"),
+  k25:        rgb("#CFC7C1"),
+  k10:        rgb("#EBE6E2"),
+  k05:        rgb("#F6F4F2"),
+  spot-100:   rgb("#4788C7"), // Primary Structure: Watercolor Sky
+  spot-40:    rgb("#93BEE3"),
+  spot-10:    rgb("#EFF6FC"),
+  accent-100: rgb("#D6743B"), // Core Node / Badge / Key Step: Warm Apricot
+  accent-40:  rgb("#EBA97F"),
+  accent-10:  rgb("#FEF4EC"),
+  point-100:  rgb("#D45B70"), // POINT! Callout: Sakura Coral
+  point-40:   rgb("#E8A0AD"),
+  point-10:   rgb("#FDF1F3"),
 )
 
 #let jp2-active-sec(fallback-title: "Overview") = {
@@ -41,6 +48,8 @@
 )
 
 #let spot(body) = text(font: f-sans, weight: "bold", fill: ink.spot-100, body)
+#let accent(body) = text(font: f-sans, weight: "bold", fill: ink.accent-100, body)
+#let pink(body) = text(font: f-sans, weight: "bold", fill: ink.point-100, body)
 
 #let jp2-title-header(
   kicker: "TECHNICAL HANDBOOK",
@@ -127,10 +136,10 @@
       },
       if badge != none {
         box(
-          fill: ink.spot-10,
-          stroke: (paint: ink.spot-100, thickness: 0.7pt),
+          fill: ink.accent-10,
+          stroke: (paint: ink.accent-100, thickness: 0.7pt),
           inset: (x: 6.5pt, y: 2.6pt),
-          text(font: f-sans, size: 7.2pt, weight: "bold", fill: ink.spot-100, badge),
+          text(font: f-sans, size: 7.2pt, weight: "bold", fill: ink.accent-100, badge),
         )
       } else { [] },
     )
@@ -219,7 +228,7 @@
   } else if mode == "tint" {
     (ink.spot-10, ink.spot-100, 0.85pt, ink.k100, ink.k65)
   } else if mode == "solid" {
-    (ink.spot-100, ink.spot-100, 0.85pt, white, ink.spot-10)
+    (ink.accent-100, ink.accent-100, 0.85pt, white, ink.accent-10)
   } else {
     (white, ink.spot-100, 0.85pt, ink.k100, ink.spot-100)
   }
@@ -256,10 +265,10 @@
   box(
     width: 12.5pt,
     height: 12.5pt,
-    fill: if highlight-step { ink.spot-100 } else { ink.k100 },
+    fill: if highlight-step { ink.accent-100 } else { ink.k100 },
     align(center + horizon, text(font: f-sans, size: 6.4pt, weight: "bold", fill: white, str(num))),
   ),
-  text(font: f-sans, size: 7pt, weight: "bold", fill: if highlight-step { ink.spot-100 } else { ink.k65 }, from-to),
+  text(font: f-sans, size: 7pt, weight: "bold", fill: if highlight-step { ink.accent-100 } else { ink.k65 }, from-to),
   text(font: f-sans, size: 7.3pt, fill: ink.k100, desc),
 )
 
@@ -315,8 +324,8 @@
         columns: (1fr, auto),
         align: horizon,
         text(font: f-sans, size: 7.3pt, weight: "bold", fill: ink.k100, caption),
-        box(fill: ink.spot-10, stroke: 0.45pt + ink.spot-40, inset: (x: 4.5pt, y: 1pt),
-          text(font: f-mono, size: 6.3pt, weight: "bold", fill: ink.spot-100, upper(lang))),
+        box(fill: ink.accent-10, stroke: 0.45pt + ink.accent-40, inset: (x: 4.5pt, y: 1pt),
+          text(font: f-mono, size: 6.3pt, weight: "bold", fill: ink.accent-100, upper(lang))),
       )
       v(3.5pt)
       line(length: 100%, stroke: 0.4pt + ink.k25)
@@ -368,8 +377,8 @@
   let content-box = block(
     breakable: false,
     width: 100%,
-    fill: ink.spot-10,
-    stroke: (paint: ink.spot-100, thickness: 0.8pt, dash: "dashed"),
+    fill: ink.point-10,
+    stroke: (paint: ink.point-100, thickness: 0.8pt, dash: "dashed"),
     inset: (top: 12pt, bottom: 8.5pt, x: 10.5pt),
     {
       place(
@@ -377,7 +386,7 @@
         dx: -2pt,
         dy: -18.5pt,
         box(
-          fill: ink.spot-100,
+          fill: ink.point-100,
           inset: (x: 7.5pt, y: 2.3pt),
           text(
             font: f-sans,
@@ -469,14 +478,14 @@
 #show: jp2-doc.with(
   book-title: "高并发多级缓存与熔断降级设计手册",
   footer-left: "JP-2COLOR-TYPST SAMPLE",
-  footer-right: "2色刷り · COBALT #005BAC",
+  footer-right: "IRASUTOYA · SKY / APRICOT / SAKURA",
 )
 
 #jp2-title-header(
-  kicker: "JAPANESE 2-COLOR PRINT · TECHNICAL HANDBOOK SAMPLE",
+  kicker: "IRASUTOYA EDITORIAL · TECHNICAL HANDBOOK SAMPLE",
   title: "高并发多级缓存与熔断降级设计",
-  subtitle: "严格双色印刷风（墨黑 #1C1C1C × 钴蓝 #005BAC）技术方案排版示例",
-  meta-line: "无冗余卡片 · 右侧留白边注 · 纯双色矢量图解 · 原生适配 Obsidian Typst Mate",
+  subtitle: "いらすとや 三色淡彩（柔蓝结构 × 暖橘核心 × 樱粉重点框）排版示例",
+  meta-line: "无冗余卡片 · 右侧留白边注 · 矢量图解与随性插图 · 原生适配 Obsidian Typst Mate",
   toc-items: (
     (num: "01", title: "多级缓存与防击穿演进", count: "2 项"),
     (num: "02", title: "熔断状态机与配置规范", count: "表 + 码"),
@@ -520,7 +529,7 @@
     )
   },
   note-title: "图解要点",
-  note-body: [实心钴蓝块标记最终可用性防线；灰色行表示已淘汰的直连穿透链路。],
+  note-body: [实心暖橘块标记最终可用性防线；灰色行表示已淘汰的直连穿透链路。],
 )
 
 #jp2-entry(
@@ -543,10 +552,10 @@
 
 #jp2-point-box(
   tag: "POINT!",
-  title: "为什么坚持严格双色印刷？",
+  title: "为什么用三色淡彩分工？",
   mascot: image("assets/irasutoya/cat_pc.png", width: 22mm),
   mascot-caption: [（顺手塞一只摸鱼排查缓存的小猫）],
-  [在技术文档中，色彩的作用是*建立信息层级*而非装饰。全篇只用墨黑承载事实、钴蓝标记变化与决策焦点；右侧留白处偶尔点缀一只 Irasutoya 随性小插图，既有日系技术书的人情味，又完全不破坏主栏阅读节奏。],
+  [在技术文档中，色彩的作用是*建立语义分工*而非堆砌装饰：#spot[水彩柔蓝]负责骨架与主路径，#accent[绘本暖橘]标记核心节点与徽章，#pink[樱花粉]专用于 `POINT!` 关键提醒；右侧留白再偶尔点缀一只 Irasutoya 随性插图，轻松治愈又不丢工程严谨感。],
 )
 
 #pagebreak()
@@ -589,6 +598,6 @@
   side-body: [
     配置变更通过配置中心下发，无需重启实例即可动态调整阈值。
     #v(6pt)
-    #jp2-margin-mascot("assets/irasutoya/coffee-cobalt.png", caption: [（duotone 双色油墨版 · 喝杯咖啡等熔断恢复）], width: 20mm)
+    #jp2-margin-mascot("assets/irasutoya/coffee.png", caption: [（喝杯咖啡等熔断半开恢复…）], width: 20mm)
   ],
 )

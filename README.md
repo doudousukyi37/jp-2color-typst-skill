@@ -1,13 +1,13 @@
 # jp-2color-typst-skill
 
-> **日系双色印刷风（`2色刷り`）技术文档 Typst Agent Skill**
-> 灵感源自《图解 HTTP》/ 技术评论社（Gihyo）/ 翔泳社（Shoeisha）经典双色技术书排版，严格使用**墨黑 `#1C1C1C` × 单一专色（默认印刷钴蓝 `#005BAC`）**，无冗余卡片、自带右侧留白边注与纯双色矢量图解，并原生适配 **Obsidian `Typst Mate`** 实时预览。
+> **日系图解书 × Irasutoya 淡彩风 Typst Agent Skill**
+> 结合《图解 HTTP》/ 翔泳社的清晰去卡片排版骨架与 **いらすとや（Irasutoya）三色淡彩混搭**（暖炭黑 `#332C28` + 水彩柔蓝结构 `#4788C7` × 绘本暖橘核心节点 `#D6743B` × 樱花粉 `POINT!` 框 `#D45B70`），内置 `cobalt`（经典印刷钴蓝双色）等 5 套一键切换预设、四轨配图与 Irasutoya 自动拉图脚本，原生适配 **Obsidian `Typst Mate`** 实时预览。
 
 ---
 
-## 效果预览
+## 效果预览（默认主题：`irasutoya` 三色淡彩混搭）
 
-| 第 1 页：开篇标题头 + 双色矢量对照图 + 边注对比条目 + `POINT!` 框 | 第 2 页：页眉自动跟随章节 + 时序图 + 三线表 + 印刷风代码块 |
+| 第 1 页：开篇标题头 + 矢量对照图 + 樱粉 `POINT!` 框 + Irasutoya 小猫 | 第 2 页：页眉跟随章节 + 暖橘高亮时序图 + 三线表 + 咖啡边注 |
 | :---: | :---: |
 | ![Preview Page 1](./assets/preview-page-1.png) | ![Preview Page 2](./assets/preview-page-2.png) |
 
@@ -64,7 +64,10 @@ uv run --with pillow --with numpy skills/jp-2color-typst/scripts/process_illustr
 ## 后续你可以怎么优化这个 Skill
 
 1. **调整主指令与写作偏好**：编辑 [skills/jp-2color-typst/SKILL.md](./skills/jp-2color-typst/SKILL.md)，补充你偏好的文档结构、字号密度或校验步骤。
-2. **自定义配色与字体**：编辑 [skills/jp-2color-typst/resources/template-jp-2color.typ](./skills/jp-2color-typst/resources/template-jp-2color.typ) 顶部的 `ink` 字典，换一套专色即可整本换肤（模板内已预留朱红 `#C83E2B`、松绿 `#1F6B4E`、蓝黑 `#1E3A5F` 参考值）。
+2. **一键切换主题预设**：编辑 [skills/jp-2color-typst/resources/template-jp-2color.typ](./skills/jp-2color-typst/resources/template-jp-2color.typ) 里的 `#let theme-name = "irasutoya"`，内置 5 套预设：
+   - `"irasutoya"`（默认）：暖炭黑 `#332C28` + 柔蓝 `#4788C7`（结构）× 暖橘 `#D6743B`（核心节点/徽章）× 樱粉 `#D45B70`（`POINT!`）
+   - `"cobalt"`：经典《图解 HTTP》严格双色印刷（墨黑 `#1C1C1C` × 钴蓝 `#005BAC`）
+   - `"sakura"` / `"sky"` / `"apricot"`：单专色 Irasutoya 柔和淡彩版
 3. **验证修改效果**：直接编译示例文件并预览 PNG：
    ```powershell
    typst compile --format png --ppi 150 skills/jp-2color-typst/examples/sample-tech-spec.typ assets/preview-page-{p}.png

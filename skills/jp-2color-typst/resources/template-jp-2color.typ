@@ -1,7 +1,7 @@
 // ============================================================================
-// Japanese 2-Color Print (2色刷り) Technical Illustrated Book Template
-// Authentic 《图解 HTTP》 / Gihyo / Shoeisha Editorial Style
-// Strictly 2 Inks: Sumi Black (K100/65/40/25/10/05) + Single Spot Ink
+// Japanese Editorial Illustrated Technical Handbook Template
+// Default Theme: "irasutoya" — Irasutoya 3-Pastel (Warm Charcoal + Sky/Apricot/Sakura)
+// Optional Presets: "cobalt" (Strict 2-Color Print 《图解 HTTP》), "sakura", "sky", "apricot"
 // Compatible with Typst 0.13–0.15+ CLI & Obsidian Typst Mate
 // ============================================================================
 
@@ -9,23 +9,103 @@
 #let f-serif = ("Noto Serif SC", "Noto Sans SC", "SimSun")
 #let f-mono = ("Consolas", "Noto Sans SC")
 
-// --- Centralized 2-Color Ink Palette ---
-// Default Spot Ink: 《图解 HTTP》 Print Cobalt (#005BAC · DIC 184)
-// Optional single-ink alternatives (swap spot-100 / spot-40 / spot-10):
-//   - Vermilion (朱红):  #C83E2B / #E08A7E / #FBECE9
-//   - Pine Green (松绿): #1F6B4E / #78AD98 / #EBF4F0
-//   - Slate Indigo (蓝黑): #1E3A5F / #7A95B5 / #EDF2F7
-#let ink = (
-  k100:     rgb("#1C1C1C"),
-  k65:      rgb("#595959"),
-  k40:      rgb("#8C8C8C"),
-  k25:      rgb("#C4C4C4"),
-  k10:      rgb("#E8E8E8"),
-  k05:      rgb("#F4F4F4"),
-  spot-100: rgb("#005BAC"),
-  spot-40:  rgb("#6FA3D2"),
-  spot-10:  rgb("#EBF3FA"),
+// --- Built-in Editorial Palettes (Switch `theme-name` in 1 line) ---
+#let jp2-palettes = (
+  // Default: Irasutoya Multi-Pastel (Scheme D — Warm Charcoal + Soft Sky / Warm Apricot / Sakura Coral)
+  irasutoya: (
+    k100:       rgb("#332C28"),
+    k65:        rgb("#665C56"),
+    k40:        rgb("#8E847E"),
+    k25:        rgb("#CFC7C1"),
+    k10:        rgb("#EBE6E2"),
+    k05:        rgb("#F6F4F2"),
+    spot-100:   rgb("#4788C7"), // Primary Structure: Watercolor Sky
+    spot-40:    rgb("#93BEE3"),
+    spot-10:    rgb("#EFF6FC"),
+    accent-100: rgb("#D6743B"), // Core Node / Badge / Key Step: Warm Apricot
+    accent-40:  rgb("#EBA97F"),
+    accent-10:  rgb("#FEF4EC"),
+    point-100:  rgb("#D45B70"), // POINT! Box / Callout: Sakura Coral
+    point-40:   rgb("#E8A0AD"),
+    point-10:   rgb("#FDF1F3"),
+  ),
+  // Classic Strict 2-Color Print (《图解 HTTP》 Sumi Black × Cobalt #005BAC)
+  cobalt: (
+    k100:       rgb("#1C1C1C"),
+    k65:        rgb("#595959"),
+    k40:        rgb("#8C8C8C"),
+    k25:        rgb("#C4C4C4"),
+    k10:        rgb("#E8E8E8"),
+    k05:        rgb("#F4F4F4"),
+    spot-100:   rgb("#005BAC"),
+    spot-40:    rgb("#6FA3D2"),
+    spot-10:    rgb("#EBF3FA"),
+    accent-100: rgb("#005BAC"),
+    accent-40:  rgb("#6FA3D2"),
+    accent-10:  rgb("#EBF3FA"),
+    point-100:  rgb("#005BAC"),
+    point-40:   rgb("#6FA3D2"),
+    point-10:   rgb("#EBF3FA"),
+  ),
+  // Single-Spot Irasutoya Sakura Coral
+  sakura: (
+    k100:       rgb("#332C28"),
+    k65:        rgb("#665C56"),
+    k40:        rgb("#8E847E"),
+    k25:        rgb("#CFC7C1"),
+    k10:        rgb("#EBE6E2"),
+    k05:        rgb("#F6F4F2"),
+    spot-100:   rgb("#D45B70"),
+    spot-40:    rgb("#E8A0AD"),
+    spot-10:    rgb("#FDF1F3"),
+    accent-100: rgb("#D45B70"),
+    accent-40:  rgb("#E8A0AD"),
+    accent-10:  rgb("#FDF1F3"),
+    point-100:  rgb("#D45B70"),
+    point-40:   rgb("#E8A0AD"),
+    point-10:   rgb("#FDF1F3"),
+  ),
+  // Single-Spot Irasutoya Watercolor Sky
+  sky: (
+    k100:       rgb("#2F3136"),
+    k65:        rgb("#5E636B"),
+    k40:        rgb("#8C919A"),
+    k25:        rgb("#C8CDD4"),
+    k10:        rgb("#E7EAEE"),
+    k05:        rgb("#F4F6F8"),
+    spot-100:   rgb("#4788C7"),
+    spot-40:    rgb("#93BEE3"),
+    spot-10:    rgb("#EFF6FC"),
+    accent-100: rgb("#4788C7"),
+    accent-40:  rgb("#93BEE3"),
+    accent-10:  rgb("#EFF6FC"),
+    point-100:  rgb("#4788C7"),
+    point-40:   rgb("#93BEE3"),
+    point-10:   rgb("#EFF6FC"),
+  ),
+  // Single-Spot Irasutoya Warm Apricot
+  apricot: (
+    k100:       rgb("#362E29"),
+    k65:        rgb("#695E56"),
+    k40:        rgb("#91867E"),
+    k25:        rgb("#D2C8C0"),
+    k10:        rgb("#ECE6E0"),
+    k05:        rgb("#F7F4F1"),
+    spot-100:   rgb("#D6743B"),
+    spot-40:    rgb("#EBA97F"),
+    spot-10:    rgb("#FEF4EC"),
+    accent-100: rgb("#D6743B"),
+    accent-40:  rgb("#EBA97F"),
+    accent-10:  rgb("#FEF4EC"),
+    point-100:  rgb("#D6743B"),
+    point-40:   rgb("#EBA97F"),
+    point-10:   rgb("#FEF4EC"),
+  ),
 )
+
+// Select active theme here: "irasutoya" | "cobalt" | "sakura" | "sky" | "apricot"
+#let theme-name = "irasutoya"
+#let ink = jp2-palettes.at(theme-name)
 
 // --- Active Section Query for Running Header ---
 #let jp2-active-sec(fallback-title: "Overview") = {
@@ -45,7 +125,7 @@
   }
 }
 
-// --- Inline Code (Clean Monochrome K05 Tint) ---
+// --- Inline Code & Emphasis Spans ---
 #let jp2-code(s) = {
   box(
     fill: ink.k05,
@@ -56,14 +136,12 @@
   )
 }
 
-// --- Spot-Ink Emphasis Span ---
 #let spot(body) = text(font: f-sans, weight: "bold", fill: ink.spot-100, body)
+#let accent(body) = text(font: f-sans, weight: "bold", fill: ink.accent-100, body)
+#let pink(body) = text(font: f-sans, weight: "bold", fill: ink.point-100, body)
 
 // --- Book-Style Front Opening Header ---
-// toc-layout:
-//   "side"  -> right-hand vertical index (ideal for 3–5 chapters; items: (num, title, count))
-//   "strip" -> full-width 2-column strip below header (ideal for 6+ chapters; items: (num, title))
-//   "none"  -> no TOC block
+// toc-layout: "side" (3–5 chapters) | "strip" (6+ chapters) | "none"
 #let jp2-title-header(
   kicker: "TECHNICAL HANDBOOK",
   title: "Document Title",
@@ -76,7 +154,6 @@
   block(
     width: 100%,
     {
-      // Top heavy print double rule
       line(length: 100%, stroke: 2.2pt + ink.spot-100)
       v(2pt)
       line(length: 100%, stroke: 0.45pt + ink.k100)
@@ -204,7 +281,7 @@
   v(10pt)
 }
 
-// --- Chapter Opening Heading ---
+// --- Chapter Opening Heading (Badge uses Accent Color) ---
 #let jp2-chapter(num, title, subtitle: none, badge: none) = {
   v(10pt, weak: true)
   block(breakable: false, sticky: true, width: 100%, {
@@ -227,10 +304,10 @@
       },
       if badge != none {
         box(
-          fill: ink.spot-10,
-          stroke: (paint: ink.spot-100, thickness: 0.7pt),
+          fill: ink.accent-10,
+          stroke: (paint: ink.accent-100, thickness: 0.7pt),
           inset: (x: 6.5pt, y: 2.6pt),
-          text(font: f-sans, size: 7.2pt, weight: "bold", fill: ink.spot-100, badge),
+          text(font: f-sans, size: 7.2pt, weight: "bold", fill: ink.accent-100, badge),
         )
       } else {
         []
@@ -244,7 +321,7 @@
   })
 }
 
-// --- Numbered Subheading (1.1 / 2.3 style with Spot Square Badge) ---
+// --- Numbered Subheading (1.1 / 2.3 style) ---
 #let jp2-sub(num, title) = {
   v(7pt, weak: true)
   block(breakable: false, sticky: true, width: 100%, below: 6pt, {
@@ -371,7 +448,7 @@
   )
 }
 
-// --- Card-Free Comparison Entry (Old vs New / Before vs After) ---
+// --- Card-Free Comparison Entry (Old vs New) ---
 #let jp2-entry(
   num,
   dim,
@@ -441,7 +518,7 @@
   )
 }
 
-// --- Pure 2-Color Print Diagram Container ---
+// --- Framed Print Diagram Container ---
 #let jp2-diagram(fig-id, caption, diagram-body, note-title: "图解要点", note-body: none, full-width: false) = {
   let box-content = block(
     width: 100%,
@@ -472,15 +549,15 @@
   }
 }
 
-// --- 2-Color Diagram Node, Arrow & Sequence Helpers ---
-// mode: "muted" | "outline" | "tint" | "solid"
+// --- Diagram Node, Arrow & Sequence Helpers ---
+// mode: "muted" | "outline" | "tint" | "solid" (uses accent-100 for key destination)
 #let d-box(title, sub: none, mode: "outline") = {
   let (bg, bd, bd-w, tc, sc) = if mode == "muted" {
     (ink.k05, ink.k25, 0.6pt, ink.k65, ink.k65)
   } else if mode == "tint" {
     (ink.spot-10, ink.spot-100, 0.85pt, ink.k100, ink.k65)
   } else if mode == "solid" {
-    (ink.spot-100, ink.spot-100, 0.85pt, white, ink.spot-10)
+    (ink.accent-100, ink.accent-100, 0.85pt, white, ink.accent-10)
   } else {
     (white, ink.spot-100, 0.85pt, ink.k100, ink.spot-100)
   }
@@ -518,15 +595,15 @@
     box(
       width: 12.5pt,
       height: 12.5pt,
-      fill: if highlight-step { ink.spot-100 } else { ink.k100 },
+      fill: if highlight-step { ink.accent-100 } else { ink.k100 },
       align(center + horizon, text(font: f-sans, size: 6.4pt, weight: "bold", fill: white, str(num))),
     ),
-    text(font: f-sans, size: 7pt, weight: "bold", fill: if highlight-step { ink.spot-100 } else { ink.k65 }, from-to),
+    text(font: f-sans, size: 7pt, weight: "bold", fill: if highlight-step { ink.accent-100 } else { ink.k65 }, from-to),
     text(font: f-sans, size: 7.3pt, fill: ink.k100, desc),
   )
 }
 
-// --- Print-Grade Code Block (Left Spot Accent + K05 Surface) ---
+// --- Print-Grade Code Block (Left Primary Accent + Accent Language Tag) ---
 #let jp2-codeblock(caption, lang, code-str, side-title: none, side-body: none) = {
   let code-box = block(
     breakable: false,
@@ -540,10 +617,10 @@
         align: horizon,
         text(font: f-sans, size: 7.3pt, weight: "bold", fill: ink.k100, caption),
         box(
-          fill: ink.spot-10,
-          stroke: 0.45pt + ink.spot-40,
+          fill: ink.accent-10,
+          stroke: 0.45pt + ink.accent-40,
           inset: (x: 4.5pt, y: 1pt),
-          text(font: f-mono, size: 6.3pt, weight: "bold", fill: ink.spot-100, upper(lang)),
+          text(font: f-mono, size: 6.3pt, weight: "bold", fill: ink.accent-100, upper(lang)),
         ),
       )
       v(3.5pt)
@@ -560,7 +637,7 @@
   }
 }
 
-// --- Classic 2-Color Print Three-Line Table ---
+// --- Classic Three-Line Print Table ---
 #let jp2-table(cols, headers, rows) = {
   set par(leading: 0.66em, justify: false)
   block(
@@ -608,7 +685,6 @@
 }
 
 // --- Casual Right-Margin Mascot / Vignette (Irasutoya / Spot Art) ---
-// Place inside the side-body of jp2-row/jp2-lead, or standalone at section end.
 #let jp2-margin-mascot(img-path, caption: none, width: 24mm) = {
   block(
     breakable: false,
@@ -625,9 +701,7 @@
   )
 }
 
-// --- Classic Japanese Reference Book Floating-Tab Dashed Box (POINT! / COLUMN) ---
-// Optional mascot: pass `mascot: image("assets/irasutoya/idea.png", width: 22mm)`
-// (or a path string via `mascot-path: "..."`) to render a charming right-margin companion.
+// --- Floating-Tab Dashed Callout Box (POINT! / COLUMN — uses Point Color) ---
 #let jp2-point-box(
   tag: "POINT!",
   title: none,
@@ -639,8 +713,8 @@
   let content-box = block(
     breakable: false,
     width: 100%,
-    fill: ink.spot-10,
-    stroke: (paint: ink.spot-100, thickness: 0.8pt, dash: "dashed"),
+    fill: ink.point-10,
+    stroke: (paint: ink.point-100, thickness: 0.8pt, dash: "dashed"),
     inset: (top: 12pt, bottom: 8.5pt, x: 10.5pt),
     {
       place(
@@ -648,7 +722,7 @@
         dx: -2pt,
         dy: -18.5pt,
         box(
-          fill: ink.spot-100,
+          fill: ink.point-100,
           inset: (x: 7.5pt, y: 2.3pt),
           text(
             font: f-sans,
