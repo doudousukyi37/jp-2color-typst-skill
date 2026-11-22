@@ -22,8 +22,11 @@ Transform plain Markdown, technical specifications, diff comparisons, or Feishu 
 2. **Card-Free Editorial Airiness**:
    - Separate sections with crisp horizontal print rules (`1.35pt` spot + `0.4pt` gray double rules for chapters; `0.4pt` hairlines between items).
    - Use an asymmetric **main column (`1fr`) + right margin column (`43mm–44mm`)** for source paths, implementation caveats, and diagram notes.
-3. **Pure 2-Color Vector Diagrams**:
-   - Replace dense paragraphs with native Typst vector diagrams (`jp2-diagram`, `d-box`, `d-arrow`, `seq-step`) using only the 4 tonal modes (`muted`, `outline`, `tint`, `solid`).
+3. **Four-Track Visual & Illustration Strategy** (see [illustrations-and-irasutoya.md](./references/illustrations-and-irasutoya.md)):
+   - **Track 1 — Native Typst Vector Diagrams** (`jp2-diagram`, `d-box`, `d-arrow`, `seq-step`): Default for clean 3–6 node flows, comparisons, and sequence steps.
+   - **Track 2 — AI Hand-Drawn Infographics & Concept Art** (`jp2-figure-img`, inspired by `book_skill`): For metaphorical diagrams or bespoke spot art; always run [process_illustration.py](./scripts/process_illustration.py) (`whiten` / `chroma-key`) to strip off-white grey borders, and visually inspect every generated image for typos. Never silently degrade on generation failure.
+   - **Track 3 — Mermaid PNGs** (`jp2-figure-img`): For complex state machines / multi-subgraph topologies (always export **PNG**, never SVG, because Typst drops Mermaid `<foreignObject>` labels).
+   - **Track 4 — Casual Irasutoya (`いらすとや`) Margin Spot Art** (`jp2-margin-mascot` / `jp2-point-box(mascot: ...)`): Add charming Japanese technical-book warmth via sparse, lighthearted illustrations in the right margin or next to `POINT!` boxes using [fetch_irasutoya.py](./scripts/fetch_irasutoya.py) (keep original soft color for cute contrast, or run `process_illustration.py duotone` for strict 2-color ink cohesion).
 4. **Zero Content Loss**:
    - Preserve every technical detail, table, field, API contract, code block, and edge case from the source document; elevate visual hierarchy rather than summarizing away facts.
 
@@ -69,5 +72,7 @@ Transform plain Markdown, technical specifications, diff comparisons, or Feishu 
 ## Quick Reference
 - Canonical template: [template-jp-2color.typ](./resources/template-jp-2color.typ)
 - Component & diagram cookbook: [components-and-diagrams.md](./references/components-and-diagrams.md)
+- Illustrations, AI infographics & Irasutoya playbook: [illustrations-and-irasutoya.md](./references/illustrations-and-irasutoya.md)
 - Working example: [sample-tech-spec.typ](./examples/sample-tech-spec.typ)
 - Obsidian setup & font slicing: [obsidian-typst-mate-guide.md](./references/obsidian-typst-mate-guide.md)
+- Helper scripts: [fetch_irasutoya.py](./scripts/fetch_irasutoya.py) · [process_illustration.py](./scripts/process_illustration.py) · [slice_obsidian_fonts.py](./scripts/slice_obsidian_fonts.py)

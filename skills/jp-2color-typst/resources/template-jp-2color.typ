@@ -587,8 +587,55 @@
   )
 }
 
+// --- Embedded Image Figure (AI Infographic / Mermaid PNG / Screenshot) ---
+#let jp2-figure-img(
+  fig-id,
+  caption,
+  img-path,
+  width: 100%,
+  note-title: "图解要点",
+  note-body: none,
+  full-width: false,
+) = {
+  jp2-diagram(
+    fig-id,
+    caption,
+    align(center, image(img-path, width: width)),
+    note-title: note-title,
+    note-body: note-body,
+    full-width: full-width,
+  )
+}
+
+// --- Casual Right-Margin Mascot / Vignette (Irasutoya / Spot Art) ---
+// Place inside the side-body of jp2-row/jp2-lead, or standalone at section end.
+#let jp2-margin-mascot(img-path, caption: none, width: 24mm) = {
+  block(
+    breakable: false,
+    width: 100%,
+    inset: (top: 4pt, bottom: 2pt),
+    align(center, {
+      image(img-path, width: width)
+      if caption != none {
+        v(3pt)
+        set par(leading: 0.65em)
+        text(font: f-sans, size: 6.7pt, fill: ink.k65, caption)
+      }
+    }),
+  )
+}
+
 // --- Classic Japanese Reference Book Floating-Tab Dashed Box (POINT! / COLUMN) ---
-#let jp2-point-box(tag: "POINT!", title: none, body, full-width: false) = {
+// Optional mascot: pass `mascot: image("assets/irasutoya/idea.png", width: 22mm)`
+// (or a path string via `mascot-path: "..."`) to render a charming right-margin companion.
+#let jp2-point-box(
+  tag: "POINT!",
+  title: none,
+  body,
+  mascot: none,
+  mascot-caption: none,
+  full-width: false,
+) = {
   let content-box = block(
     breakable: false,
     width: 100%,
@@ -620,6 +667,25 @@
   v(10pt)
   if full-width {
     block(breakable: false, width: 100%, below: 9pt, content-box)
+  } else if mascot != none {
+    block(
+      breakable: false,
+      width: 100%,
+      below: 9pt,
+      grid(
+        columns: (1fr, 44mm),
+        column-gutter: 8mm,
+        align: (top + left, bottom + center),
+        content-box,
+        block(width: 100%, align(center, {
+          mascot
+          if mascot-caption != none {
+            v(2pt)
+            text(font: f-sans, size: 6.6pt, fill: ink.k65, mascot-caption)
+          }
+        })),
+      ),
+    )
   } else {
     jp2-row(content-box)
   }

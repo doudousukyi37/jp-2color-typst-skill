@@ -15,9 +15,11 @@ Reference for `resources/template-jp-2color.typ`.
 | `#jp2-item(...)` | Square-bullet rule/spec row + hairline | `label`, `body`, `side-title`, `side-body` |
 | `#jp2-entry(...)` | Card-free Old vs New comparison entry | `num`, `dim`, `old-body`, `new-body`, `old-label`, `new-label`, `side-title`, `side-body` |
 | `#jp2-diagram(...)` | Framed 2-color vector diagram + guide | `fig-id`, `caption`, `diagram-body`, `note-title`, `note-body`, `full-width` |
+| `#jp2-figure-img(...)` | Framed AI infographic / Mermaid PNG / screenshot | `fig-id`, `caption`, `img-path`, `width`, `note-title`, `note-body`, `full-width` |
+| `#jp2-margin-mascot(...)` | Casual Irasutoya / spot illustration for right margin | `img-path`, `caption`, `width` |
 | `#jp2-codeblock(...)` | Left-accented monochrome code block | `caption`, `lang`, `code-str`, `side-title`, `side-body` |
 | `#jp2-table(...)` | Three-line print table (repeating header) | `cols`, `headers`, `rows` |
-| `#jp2-point-box(...)` | Floating-tab dashed highlight box | `tag`, `title`, `body`, `full-width` |
+| `#jp2-point-box(...)` | Floating-tab dashed highlight box (+ optional mascot) | `tag`, `title`, `body`, `mascot`, `mascot-caption`, `full-width` |
 | `#spot[...]` | Bold spot-ink inline emphasis | `body` |
 
 ## 2. Diagram Node Tonal Hierarchy (`d-box`)

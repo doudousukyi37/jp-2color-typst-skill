@@ -28,11 +28,35 @@ jp-2color-typst-skill/
         │   └── template-jp-2color.typ             # 通用双色印刷 Typst 模板与全套组件
         ├── references/
         │   ├── components-and-diagrams.md         # 组件 API 与双色矢量图画法速查
+        │   ├── illustrations-and-irasutoya.md     # 4 轨配图体系（book_skill 信息图 + Irasutoya 插图）
         │   └── obsidian-typst-mate-guide.md       # Obsidian Typst Mate 预览与字体切片指南
         ├── examples/
-        │   └── sample-tech-spec.typ               # 可直接编译的完整双页示例
+        │   ├── sample-tech-spec.typ               # 可直接编译的完整双页示例（含 Irasutoya 原色 & 双色示例）
+        │   └── assets/irasutoya/                  # 示例用 Irasutoya 透明 PNG
         └── scripts/
+            ├── fetch_irasutoya.py                 # 从 irasutoya.com 一键检索并下载透明 PNG
+            ├── process_illustration.py            # 配图后处理（whiten 漂白 / chroma-key 抠透明 / duotone 双色化）
             └── slice_obsidian_fonts.py            # Windows Noto SC 可变字体静态切片脚本
+```
+
+---
+
+## 四轨配图体系（借鉴 `book_skill` + 日系技术书 Irasutoya）
+
+| 配图轨道 | 适用场景 | 工具 / 组件 |
+| :--- | :--- | :--- |
+| **1. 原生 Typst 矢量图** | 3–6 节点对比流、架构框、时序步 | `#jp2-diagram` + `d-box` / `d-arrow` / `seq-step` |
+| **2. AI 手绘信息图 / 概念图** | 冰山、漏斗、闸门等视觉隐喻图 | `#jp2-figure-img` + `process_illustration.py whiten / chroma-key` |
+| **3. Mermaid 架构图** | 复杂状态机与多子图拓扑（务必输出 PNG，Typst 不支持 Mermaid SVG `<foreignObject>`） | `#jp2-figure-img` |
+| **4. Irasutoya (`いらすとや`) 随性插图** | 右栏边注、`POINT!` 框旁“无关紧要但超有日系技术书味道”的可爱小图 | `fetch_irasutoya.py` + `#jp2-margin-mascot` / `#jp2-point-box(mascot: ...)`（支持保留原色或 `duotone` 转双色油墨） |
+
+### 快速拉一张 Irasutoya 小插图
+```powershell
+# 下载透明 PNG（原色，适合做可爱反差萌点缀）
+python skills/jp-2color-typst/scripts/fetch_irasutoya.py get "猫 パソコン" --out ./assets/irasutoya --name cat_pc.png
+
+# 可选：一键转成墨黑 × 钴蓝双色印刷油墨风
+uv run --with pillow --with numpy skills/jp-2color-typst/scripts/process_illustration.py duotone ./assets/irasutoya/cat_pc.png ./assets/irasutoya/cat_pc-cobalt.png --spot "#005BAC"
 ```
 
 ---

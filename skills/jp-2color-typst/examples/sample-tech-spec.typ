@@ -348,9 +348,24 @@
   ))
 }
 
-#let jp2-point-box(tag: "POINT!", title: none, body) = {
-  v(8pt)
-  jp2-row(block(
+#let jp2-margin-mascot(img-path, caption: none, width: 24mm) = {
+  block(
+    breakable: false,
+    width: 100%,
+    inset: (top: 4pt, bottom: 2pt),
+    align(center, {
+      image(img-path, width: width)
+      if caption != none {
+        v(3pt)
+        set par(leading: 0.65em)
+        text(font: f-sans, size: 6.7pt, fill: ink.k65, caption)
+      }
+    }),
+  )
+}
+
+#let jp2-point-box(tag: "POINT!", title: none, body, mascot: none, mascot-caption: none) = {
+  let content-box = block(
     breakable: false,
     width: 100%,
     fill: ink.spot-10,
@@ -377,7 +392,25 @@
       set par(leading: 0.76em)
       text(size: 8.3pt, fill: ink.k100, body)
     },
-  ))
+  )
+  v(8pt)
+  if mascot != none {
+    block(breakable: false, width: 100%, below: 9pt, grid(
+      columns: (1fr, 44mm),
+      column-gutter: 8mm,
+      align: (top + left, bottom + center),
+      content-box,
+      block(width: 100%, align(center, {
+        mascot
+        if mascot-caption != none {
+          v(2pt)
+          text(font: f-sans, size: 6.6pt, fill: ink.k65, mascot-caption)
+        }
+      })),
+    ))
+  } else {
+    jp2-row(content-box)
+  }
 }
 
 #let jp2-doc(book-title: "Technical Handbook", footer-left: "", footer-right: "", body) = {
@@ -511,7 +544,9 @@
 #jp2-point-box(
   tag: "POINT!",
   title: "为什么坚持严格双色印刷？",
-  [在技术文档中，色彩的作用是*建立信息层级*而非装饰。全篇只用墨黑承载事实、钴蓝标记变化与决策焦点，读者的视觉扫描路径天然清晰，且黑白打印依然层次分明。],
+  mascot: image("assets/irasutoya/cat_pc.png", width: 22mm),
+  mascot-caption: [（顺手塞一只摸鱼排查缓存的小猫）],
+  [在技术文档中，色彩的作用是*建立信息层级*而非装饰。全篇只用墨黑承载事实、钴蓝标记变化与决策焦点；右侧留白处偶尔点缀一只 Irasutoya 随性小插图，既有日系技术书的人情味，又完全不破坏主栏阅读节奏。],
 )
 
 #pagebreak()
@@ -551,5 +586,9 @@
   "yaml",
   "circuit_breaker:\n  window_seconds: 60\n  min_requests: 50\n  error_ratio_threshold: 0.25\n  open_cooldown_seconds: 15\n  fallback_mode: \"serve_stale_snapshot\"",
   side-title: "热更新支持",
-  side-body: [配置变更通过配置中心下发，无需重启实例即可动态调整阈值。],
+  side-body: [
+    配置变更通过配置中心下发，无需重启实例即可动态调整阈值。
+    #v(6pt)
+    #jp2-margin-mascot("assets/irasutoya/coffee-cobalt.png", caption: [（duotone 双色油墨版 · 喝杯咖啡等熔断恢复）], width: 20mm)
+  ],
 )
